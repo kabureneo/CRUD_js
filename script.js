@@ -30,30 +30,31 @@ if (document.getElementById('form')) {
     });
 }
 
-// Ambil elemen-elemen yang dibutuhkan di results.html
-if (document.getElementById('data-table')) {
+// Fungsi untuk menampilkan data dari localStorage
+function displayData(isEditor) {
     const dataTable = document.getElementById('data-table').getElementsByTagName('tbody')[0];
 
-    // Fungsi untuk menampilkan data dari localStorage
-    function displayData() {
-        // Ambil data dari localStorage
-        const dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
+    // Ambil data dari localStorage
+    const dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
 
-        // Kosongkan tabel sebelum menampilkan data yang baru
-        dataTable.innerHTML = '';
+    // Kosongkan tabel sebelum menampilkan data yang baru
+    dataTable.innerHTML = '';
 
-        // Loop data dan tambahkan ke tabel
-        dataKontak.forEach((kontak, index) => {
-            const row = dataTable.insertRow();
+    // Loop data dan tambahkan ke tabel
+    dataKontak.forEach((kontak, index) => {
+        const row = dataTable.insertRow();
 
-            const nameCell = row.insertCell(0);
-            const phoneCell = row.insertCell(1);
-            const emailCell = row.insertCell(2);
+        const nameCell = row.insertCell(0);
+        const phoneCell = row.insertCell(1);
+        const emailCell = row.insertCell(2);
+
+        nameCell.textContent = kontak.name;
+        phoneCell.textContent = kontak.phone;
+        emailCell.textContent = kontak.email;
+
+        // Jika perannya adalah editor (Orang Kedua), tambahkan kolom Aksi
+        if (isEditor) {
             const actionCell = row.insertCell(3); // Kolom aksi untuk tombol edit & hapus
-
-            nameCell.textContent = kontak.name;
-            phoneCell.textContent = kontak.phone;
-            emailCell.textContent = kontak.email;
 
             // Tambahkan tombol Edit
             const editButton = document.createElement('button');
@@ -72,57 +73,54 @@ if (document.getElementById('data-table')) {
                 deleteData(index);
             };
             actionCell.appendChild(deleteButton);
-        });
-    }
+        }
+    });
+}
 
-    // Fungsi untuk menghapus data berdasarkan indeks
-    function deleteData(index) {
-        // Ambil data dari localStorage
-        let dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
+// Fungsi untuk menghapus data berdasarkan indeks
+function deleteData(index) {
+    // Ambil data dari localStorage
+    let dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
 
-        // Hapus item berdasarkan indeks
-        dataKontak.splice(index, 1);
+    // Hapus item berdasarkan indeks
+    dataKontak.splice(index, 1);
+
+    // Simpan kembali data yang sudah diperbarui ke localStorage
+    localStorage.setItem('dataKontak', JSON.stringify(dataKontak));
+
+    // Tampilkan ulang data
+    displayData(true); // true jika ini diakses oleh editor
+
+    alert('Data berhasil dihapus!');
+}
+
+// Fungsi untuk mengedit data berdasarkan indeks
+function editData(index) {
+    // Ambil data dari localStorage
+    let dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
+
+    // Ambil item yang akan diedit
+    const kontak = dataKontak[index];
+
+    // Meminta input baru dari pengguna
+    const newName = prompt('Edit Nama:', kontak.name);
+    const newPhone = prompt('Edit Nomor Telepon:', kontak.phone);
+    const newEmail = prompt('Edit Gmail:', kontak.email);
+
+    // Jika pengguna tidak membatalkan input, perbarui data
+    if (newName !== null && newPhone !== null && newEmail !== null) {
+        dataKontak[index] = {
+            name: newName,
+            phone: newPhone,
+            email: newEmail
+        };
 
         // Simpan kembali data yang sudah diperbarui ke localStorage
         localStorage.setItem('dataKontak', JSON.stringify(dataKontak));
 
         // Tampilkan ulang data
-        displayData();
+        displayData(true); // true jika ini diakses oleh editor
 
-        alert('Data berhasil dihapus!');
+        alert('Data berhasil diperbarui!');
     }
-
-    // Fungsi untuk mengedit data berdasarkan indeks
-    function editData(index) {
-        // Ambil data dari localStorage
-        let dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
-
-        // Ambil item yang akan diedit
-        const kontak = dataKontak[index];
-
-        // Meminta input baru dari pengguna
-        const newName = prompt('Edit Nama:', kontak.name);
-        const newPhone = prompt('Edit Nomor Telepon:', kontak.phone);
-        const newEmail = prompt('Edit Gmail:', kontak.email);
-
-        // Jika pengguna tidak membatalkan input, perbarui data
-        if (newName !== null && newPhone !== null && newEmail !== null) {
-            dataKontak[index] = {
-                name: newName,
-                phone: newPhone,
-                email: newEmail
-            };
-
-            // Simpan kembali data yang sudah diperbarui ke localStorage
-            localStorage.setItem('dataKontak', JSON.stringify(dataKontak));
-
-            // Tampilkan ulang data
-            displayData();
-
-            alert('Data berhasil diperbarui!');
-        }
-    }
-
-    // Tampilkan data saat halaman dimuat
-    displayData();
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Kontak - Orang Pertama</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: none;
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daftar Kontak (Orang Pertama)</h1>
+
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Nomor Telepon</th>
+                <th>Gmail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data akan ditampilkan di sini -->
+        </tbody>
+    </table>
+
+    <a href="index.html">Tambah Data Baru</a>
+
+    <script src="script.js"></script>
+    <script>
+        // Khusus untuk Orang Pertama yang hanya bisa melihat data
+        document.addEventListener('DOMContentLoaded', function() {
+            displayData(false); // false untuk tidak menampilkan tombol edit dan hapus
+        });
+    </script>
+</body>
+</html>

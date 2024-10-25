@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Sederhana - Tampilkan Data</title>
+    <title>Daftar Kontak - Orang Kedua</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: none;
+            background-color: white;
+            color: black;
+        }
+    </style>
 </head>
 <body>
-    <h1>Daftar Kontak</h1>
+    <h1>Daftar Kontak (Orang Kedua)</h1>
 
     <table id="data-table">
         <thead>
@@ -26,5 +33,11 @@
     <a href="index.html">Tambah Data Baru</a>
 
     <script src="script.js"></script>
+    <script>
+        // Khusus untuk Orang Kedua yang bisa mengedit dan menghapus data
+        document.addEventListener('DOMContentLoaded', function() {
+            displayData(true); // true untuk menampilkan tombol edit dan hapus
+        });
+    </script>
 </body>
 </html>

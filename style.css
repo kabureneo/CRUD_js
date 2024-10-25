@@ -3,6 +3,10 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
+    background-image: url(img/background-1.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
 }
 
 h1, h2 {
@@ -16,11 +20,12 @@ h1, h2 {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
+    color: black;
 }
 
 input {
     display: block;
-    width: 100%;
+    width: 95%;
     margin-bottom: 10px;
     padding: 8px;
     border-radius: 4px;
