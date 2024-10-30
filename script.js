@@ -2,6 +2,7 @@
 if (document.getElementById('form')) {
     const form = document.getElementById('form');
     const nameInput = document.getElementById('name');
+    const sekolahInput = document.getElementById('asalSekolah');
     const phoneInput = document.getElementById('phone');
     const emailInput = document.getElementById('email');
 
@@ -11,6 +12,7 @@ if (document.getElementById('form')) {
 
         // Ambil data dari input
         const name = nameInput.value;
+        const sekolah = sekolahInput.value;
         const phone = phoneInput.value;
         const email = emailInput.value;
 
@@ -18,7 +20,7 @@ if (document.getElementById('form')) {
         let dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
 
         // Tambahkan data baru ke array
-        dataKontak.push({ name, phone, email });
+        dataKontak.push({ name, sekolah, phone, email });
 
         // Simpan array yang diperbarui ke localStorage
         localStorage.setItem('dataKontak', JSON.stringify(dataKontak));
@@ -45,16 +47,18 @@ function displayData(isEditor) {
         const row = dataTable.insertRow();
 
         const nameCell = row.insertCell(0);
-        const phoneCell = row.insertCell(1);
-        const emailCell = row.insertCell(2);
+        const sekolahCell = row.insertCell(1);
+        const phoneCell = row.insertCell(2);
+        const emailCell = row.insertCell(3);
 
         nameCell.textContent = kontak.name;
+        sekolahCell.textContent = kontak.sekolah;
         phoneCell.textContent = kontak.phone;
         emailCell.textContent = kontak.email;
 
         // Jika perannya adalah editor (Orang Kedua), tambahkan kolom Aksi
         if (isEditor) {
-            const actionCell = row.insertCell(3); // Kolom aksi untuk tombol edit & hapus
+            const actionCell = row.insertCell(4); // Kolom aksi untuk tombol edit & hapus
 
             // Tambahkan tombol Edit
             const editButton = document.createElement('button');
