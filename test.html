@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Opsi</title>
+</head>
+<body>
+    <h1>Pilih Opsi Terbaik</h1>
+    <form action="/submit" method="post">
+        <!-- Pilihan Dropdown -->
+        <label for="dropdown">Pilih Salah Satu:</label>
+        <select id="dropdown" name="pilihan">
+            <option value="opsi1">Opsi 1</option>
+            <option value="opsi2">Opsi 2</option>
+            <option value="opsi3">Opsi 3</option>
+        </select>
+        <br><br>
+
+        <!-- Pilihan Radio Button -->
+        <p>Pilih Berdasarkan Prioritas:</p>
+        <input type="radio" id="prioritas1" name="prioritas" value="tinggi">
+        <label for="prioritas1">Tinggi</label><br>
+
+        <input type="radio" id="prioritas2" name="prioritas" value="sedang">
+        <label for="prioritas2">Sedang</label><br>
+
+        <input type="radio" id="prioritas3" name="prioritas" value="rendah">
+        <label for="prioritas3">Rendah</label><br><br>
+
+        <!-- Tombol Submit -->
+        <button type="submit">Kirim</button>
+    </form>
+</body>
+</html>

@@ -5,6 +5,7 @@ if (document.getElementById('form')) {
     const sekolahInput = document.getElementById('asalSekolah');
     const phoneInput = document.getElementById('phone');
     const emailInput = document.getElementById('email');
+    const numberInput = document.getElementById('number');
 
     // Fungsi untuk menyimpan data ke localStorage
     form.addEventListener('submit', function(event) {
@@ -15,12 +16,13 @@ if (document.getElementById('form')) {
         const sekolah = sekolahInput.value;
         const phone = phoneInput.value;
         const email = emailInput.value;
+        const number = parseInt(numberInput.value);
 
         // Ambil data yang sudah ada di localStorage, atau buat array baru jika kosong
         let dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
 
         // Tambahkan data baru ke array
-        dataKontak.push({ name, sekolah, phone, email });
+        dataKontak.push({ name, sekolah, phone, email, number });
 
         // Simpan array yang diperbarui ke localStorage
         localStorage.setItem('dataKontak', JSON.stringify(dataKontak));
@@ -39,6 +41,9 @@ function displayData(isEditor) {
     // Ambil data dari localStorage
     const dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
 
+    // Urutkan data berdasarkan nilai angka dari yang terkecil hingga terbesar
+    dataKontak.sort((a, b) => a.number - b.number);
+
     // Kosongkan tabel sebelum menampilkan data yang baru
     dataTable.innerHTML = '';
 
@@ -50,15 +55,18 @@ function displayData(isEditor) {
         const sekolahCell = row.insertCell(1);
         const phoneCell = row.insertCell(2);
         const emailCell = row.insertCell(3);
+        const numberCell = row.insertCell(4);
+
 
         nameCell.textContent = kontak.name;
         sekolahCell.textContent = kontak.sekolah;
         phoneCell.textContent = kontak.phone;
         emailCell.textContent = kontak.email;
+        numberCell.textContent = kontak.number;
 
         // Jika perannya adalah editor (Orang Kedua), tambahkan kolom Aksi
         if (isEditor) {
-            const actionCell = row.insertCell(4); // Kolom aksi untuk tombol edit & hapus
+            const actionCell = row.insertCell(5); // Kolom aksi untuk tombol edit & hapus
 
             // Tambahkan tombol Edit
             const editButton = document.createElement('button');
@@ -110,13 +118,17 @@ function editData(index) {
     const newName = prompt('Edit Nama:', kontak.name);
     const newPhone = prompt('Edit Nomor Telepon:', kontak.phone);
     const newEmail = prompt('Edit Gmail:', kontak.email);
+    const newSekolah = prompt('Edit Gmail:', kontak.sekolah);
+    const newNumber = parseInt(prompt('Edit Angka:', kontak.number));
 
     // Jika pengguna tidak membatalkan input, perbarui data
-    if (newName !== null && newPhone !== null && newEmail !== null) {
+    if (newName !== null && newPhone !== null && newEmail !== null && !isNaN(newNumber)) {
         dataKontak[index] = {
             name: newName,
             phone: newPhone,
-            email: newEmail
+            email: newEmail,
+            sekolah: newSekolah,
+            number: newNumber
         };
 
         // Simpan kembali data yang sudah diperbarui ke localStorage
