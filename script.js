@@ -58,19 +58,26 @@ function displayData(isEditor) {
 
         const nameCell = row.insertCell(0);
         const sekolahCell = row.insertCell(1);
-        const phoneCell = row.insertCell(2);
-        const emailCell = row.insertCell(3);
-        const kecamatanCell = row.insertCell(4);
+        
+        const kecamatanCell = row.insertCell(2);
 
 
         nameCell.textContent = kontak.name;
         sekolahCell.textContent = kontak.sekolah;
-        phoneCell.textContent = kontak.phone;
-        emailCell.textContent = kontak.email;
+        
         kecamatanCell.textContent = kontak.kecamatan;
 
         // Jika perannya adalah editor (Orang Kedua), tambahkan kolom Aksi
         if (isEditor) {
+
+            const phoneCell = row.insertCell(3);
+            const emailCell = row.insertCell(4);
+
+            phoneCell.textContent = kontak.phone;
+            emailCell.textContent = kontak.email;
+
+
+
             const actionCell = row.insertCell(5); // Kolom aksi untuk tombol edit & hapus
 
             // Tambahkan tombol Edit
