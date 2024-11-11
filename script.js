@@ -5,7 +5,9 @@ if (document.getElementById('form')) {
     const sekolahInput = document.getElementById('asalSekolah');
     const phoneInput = document.getElementById('phone');
     const emailInput = document.getElementById('email');
-    const numberInput = document.getElementById('number');
+    // const numberInput = document.getElementById('number');
+    // const kecamatanInput = document.getElementById('kecamatan');
+    const kecamatanInput = document.getElementById('kecamatan');
 
     // Fungsi untuk menyimpan data ke localStorage
     form.addEventListener('submit', function(event) {
@@ -16,13 +18,16 @@ if (document.getElementById('form')) {
         const sekolah = sekolahInput.value;
         const phone = phoneInput.value;
         const email = emailInput.value;
-        const number = parseInt(numberInput.value);
+
+        // mengambil nama dan nilai kecamatan
+        const kecamatan = kecamatanInput.options[kecamatanInput.selectedIndex].value;
+        const kecamatanAngka = parseInt(kecamatanInput.options[kecamatanInput.selectedIndex].getAttribute('data-angka'));
 
         // Ambil data yang sudah ada di localStorage, atau buat array baru jika kosong
-        let dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
+        const dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
 
         // Tambahkan data baru ke array
-        dataKontak.push({ name, sekolah, phone, email, number });
+        dataKontak.push({ name, sekolah, phone, email, kecamatan, kecamatanAngka });
 
         // Simpan array yang diperbarui ke localStorage
         localStorage.setItem('dataKontak', JSON.stringify(dataKontak));
@@ -39,14 +44,14 @@ function displayData(isEditor) {
     const dataTable = document.getElementById('data-table').getElementsByTagName('tbody')[0];
 
     // Ambil data dari localStorage
-    const dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
+    let dataKontak = JSON.parse(localStorage.getItem('dataKontak')) || [];
 
     // Urutkan data berdasarkan nilai angka dari yang terkecil hingga terbesar
-    dataKontak.sort((a, b) => a.number - b.number);
+    dataKontak.sort((a, b) => a.kecamatanAngka - b.kecamatanAngka);
 
     // Kosongkan tabel sebelum menampilkan data yang baru
     dataTable.innerHTML = '';
-
+ 
     // Loop data dan tambahkan ke tabel
     dataKontak.forEach((kontak, index) => {
         const row = dataTable.insertRow();
@@ -55,14 +60,14 @@ function displayData(isEditor) {
         const sekolahCell = row.insertCell(1);
         const phoneCell = row.insertCell(2);
         const emailCell = row.insertCell(3);
-        const numberCell = row.insertCell(4);
+        const kecamatanCell = row.insertCell(4);
 
 
         nameCell.textContent = kontak.name;
         sekolahCell.textContent = kontak.sekolah;
         phoneCell.textContent = kontak.phone;
         emailCell.textContent = kontak.email;
-        numberCell.textContent = kontak.number;
+        kecamatanCell.textContent = kontak.kecamatan;
 
         // Jika perannya adalah editor (Orang Kedua), tambahkan kolom Aksi
         if (isEditor) {
@@ -119,16 +124,17 @@ function editData(index) {
     const newPhone = prompt('Edit Nomor Telepon:', kontak.phone);
     const newEmail = prompt('Edit Gmail:', kontak.email);
     const newSekolah = prompt('Edit Gmail:', kontak.sekolah);
-    const newNumber = parseInt(prompt('Edit Angka:', kontak.number));
+    const newKecamatan = prompt('Edit Kecamatan:', kontak.kecamatan); 
+    const newKecamatanAngka = parseInt(prompt('Edit Angka Kecamatan:', kontak.kecamatanAngka)); 
 
     // Jika pengguna tidak membatalkan input, perbarui data
-    if (newName !== null && newPhone !== null && newEmail !== null && !isNaN(newNumber)) {
+    if (newName !== null && newPhone !== null && newEmail !== null && newKecamatan !== null && !isNaN(newKecamatanAngka)) {
         dataKontak[index] = {
             name: newName,
             phone: newPhone,
             email: newEmail,
             sekolah: newSekolah,
-            number: newNumber
+            kecamatanAngka: newKecamatanAngka
         };
 
         // Simpan kembali data yang sudah diperbarui ke localStorage
